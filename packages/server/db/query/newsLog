@@ -1,0 +1,24 @@
+const NewsLog = require('../models/NewsLog');
+const { findUserById } = require('./user');
+
+/**
+ * @param {{
+ *  userId: string; 
+ *  category: string;
+ *  source: string;
+ *  url: string;
+ * }} newsLogObj 
+ */
+async function createNewsLog(newsLogObj ) {
+    const newsLog = new NewsLog(newsLogObj);
+    return newsLog.save();
+}
+
+async function findNewsLogByUser(user){
+    return NewsLog.find({userId :{user}}).exec();
+}
+
+module.exports = {
+    createNewsLog,
+    findNewsLogByUser,
+};
