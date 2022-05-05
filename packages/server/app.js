@@ -8,12 +8,12 @@ const pingRouter = require('./routes/ping');
 const registrationRouter = require('./routes/registration');
 const loginRouter = require('./routes/login');
 const authRouter = require('./routes/auth');
-const thingRouter = require('./routes/thing');
-const replyRouter = require('./routes/reply');
-const reviewRouter = require('./routes/review');
-const userRouter = require('./routes/user');
+// const thingRouter = require('./routes/thing');
+// const replyRouter = require('./routes/reply');
+// const reviewRouter = require('./routes/review');
+// const userRouter = require('./routes/user');
 
-const authMiddleware = require('./middlewares/auth.middlewwre');
+const authMiddleware = require('./middlewares/auth.middleware');
 
 var app = express();
 var router = express.Router();
@@ -32,7 +32,7 @@ router.use('/auth', authMiddleware, authRouter);
 // router.use('/things', authMiddleware, thingRouter);
 // router.use('/replies', authMiddleware, replyRouter);
 // router.use('/reviews', authMiddleware, reviewRouter);
-router.use('/users', authMiddleware, userRouter);
+// router.use('/users', authMiddleware, userRouter);
 
 app.use('/api', router);
 

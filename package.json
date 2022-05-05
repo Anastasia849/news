@@ -1,7 +1,17 @@
 {
-  "name": "root",
-  "private": true,
-  "devDependencies": {
-    "lerna": "^4.0.0"
-  }
+    "name": "root",
+    "private": true,
+    "scripts": {
+        "build:client": "lerna run build --scope \"@myapp/client\"",
+        "docker:build": "docker build . -t course-work-6sem",
+        "docker": "npm run build:client && npm run docker:build",
+        "kill-ports": "kill-port --port 8080,3000",
+        "start": "npm run kill-ports && lerna run start --parallel",
+        "test": "lerna run test --parallel"
+    },
+    "devDependencies": {
+        "kill-port": "^1.6.1",
+        "lerna": "^4.0.0"
+
+}
 }

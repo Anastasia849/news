@@ -1,4 +1,4 @@
-module.exports = {
-    MODERATOR: 'MODERATOR',
-    USER: 'USER',
-};
+// module.exports = {
+//     MODERATOR: 'MODERATOR',
+//     USER: 'USER',
+// };
