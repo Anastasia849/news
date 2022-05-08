@@ -5,7 +5,12 @@ import News from "./components/News/News";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { router } from "./config/config";
 import LoadingBar from "react-top-loading-bar";
+import { PAGE_LOGIN, PAGE_LOGOUT, PAGE_REGISTRATION} from './common/paths';
+import LoginPage from './pages/_login';
 
+import './index.css';
+import LogoutPage from './pages/_logout';
+import RegistrationPage from './pages/_registration';
 
 function App() {
   const [progress, setProgress] = useState(0);
@@ -35,6 +40,9 @@ function App() {
               />
             )
           }
+          <Route path={PAGE_LOGOUT} element={<LogoutPage />} />
+          <Route path={PAGE_LOGIN} element={<LoginPage />} />
+          <Route path={PAGE_REGISTRATION} element={<RegistrationPage />} />
         </Routes>
       </Router>
     </>

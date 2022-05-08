@@ -1,0 +1,10 @@
+.LoginFormBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.ElementForm:global(.MuiFormControl-root),
+.ElementForm:global(.MuiButton-root),
+.ElementForm:global(.MuiAlert-root) {
+    margin-bottom: 12px;
+}

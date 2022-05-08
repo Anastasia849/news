@@ -39,7 +39,6 @@ router.post('/', async function (req, res, next) {
             user: {
                 id: userFromDb.id,
                 login: userFromDb.login,
-                fullName: userFromDb.fullName,
                 role: userFromDb.role,
             },
         });

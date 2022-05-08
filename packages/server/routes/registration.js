@@ -17,7 +17,7 @@ router.post('/',
     ],
     async function (req, res, next) {
         try {
-            const { login, password, fullName, avatarSrc } = req.body;
+            const { login, password } = req.body;
 
             const isBusyLogin = !!(await findUserByLogin(login));
 
@@ -34,7 +34,6 @@ router.post('/',
             await createNewUser({
                 login,
                 password: hashPassword,
-                fullName,
                 role: isModerator ? Role.MODERATOR : Role.USER,
             });
 

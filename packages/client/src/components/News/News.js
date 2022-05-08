@@ -7,7 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Nullimage from "../../components/Images/nullimage.png";
 import { Row, Col } from "react-bootstrap";
 import { Header, Container, card } from "./index";
-import { endpointPath } from "../../config/api";
+import { endpointPath } from "../../config/news_api";
 import { header } from "../../config/config";
 
 

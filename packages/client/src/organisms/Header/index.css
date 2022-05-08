@@ -1,0 +1,27 @@
+.Header {
+    position: sticky;
+    top: 0;
+    right: 0;
+    z-index: var(--z-index-header);
+    height: 50px;
+    background-color: var(--background-color-header);
+    border-bottom: 1px solid var(--color-delimiter);
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Header__title {
+    text-transform: uppercase;
+}
+
+.Header__avatarWrap {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.Header__usesrname {
+    margin-right: 6px;
+}

@@ -27,5 +27,6 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "eslint quotes": ["error", "single", { "allowTemplateLiterals": true }]
 }

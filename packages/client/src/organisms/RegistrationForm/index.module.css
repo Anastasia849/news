@@ -1,0 +1,11 @@
+.RegistrationFormBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.ElementForm,
+.ElementForm:global(.MuiFormControl-root),
+.ElementForm:global(.MuiButton-root),
+.ElementForm:global(.MuiAlert-root) {
+    margin-bottom: 12px;
+}

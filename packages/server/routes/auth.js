@@ -4,9 +4,8 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
-    const { fullName, id, login, role } = await findUserById(req.user.id);
+    const {  id, login, role } = await findUserById(req.user.id);
     res.send({
-        fullName,
         id,
         login,
         role,
