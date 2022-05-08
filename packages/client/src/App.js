@@ -5,7 +5,7 @@ import News from "./components/News/News";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { router } from "./config/config";
 import LoadingBar from "react-top-loading-bar";
-
+import Login from "./routes/Login/Login.jsx";
 
 function App() {
   const [progress, setProgress] = useState(0);
@@ -34,6 +34,9 @@ function App() {
                 }
               />
             )
+          }
+          {
+            <Route path="/login" element={<Login />}/>
           }
         </Routes>
       </Router>

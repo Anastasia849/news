@@ -10,7 +10,7 @@ export const navs = [
     { nav: "Здоровье", page: "/health" },
     { nav: "Развлечения", page: "/entertainment" },
     { nav: "Технологии", page: "/technology" },
-    { nav: "Войти", page: "/login" }
+    { nav: "Авторизация", page: "/login" }
 ]
 
 export const router = [
