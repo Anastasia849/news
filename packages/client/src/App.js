@@ -6,8 +6,21 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { router } from "./config/config";
 import LoadingBar from "react-top-loading-bar";
 import Login from "./routes/Login/Login.jsx";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {  auth } from "./bll/reducers/reducerUser";
+
 
 function App() {
+  
+  const dispath = useDispatch()
+ 
+  useEffect(() => {
+    if (localStorage.getItem("authorization")) {
+      dispath(auth())
+    }
+  }, [])
+
   const [progress, setProgress] = useState(0);
   const pageSize = 7;
   document.body.style.backgroundColor = "#F5F5F5";
