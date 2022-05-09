@@ -7,14 +7,14 @@ const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/auth.middleware")
 
 
-router.get('/', async (req, res, next) => {
+router.get('/', authMiddleware, async (req, res, next) => {
     const users = await User.find({}).exec();
 
     res.send(users);
 });
 
 router.post('/registration', [
-    check("login", "Никнейм должен быть длиннее 5 и меньше 23 символов").isLength({ min: 5, max: 23 }),
+    check("login", "Никнейм должен быть длиннее 4 и меньше 23 символов").isLength({ min: 4, max: 23 }),
     check("password", "Пароль должен быть длиннее 3 и меньше 12 символов").isLength({ min: 3, max: 12 })
 ], async (req, res) => {
     try {
@@ -34,12 +34,13 @@ router.post('/registration', [
         const hashPassword = await bcrypt.hash(password, 4)
         const user = new User({ login, password: hashPassword, role: 'User' });
         await user.save();
-        return res.json({ message: "Пользователь был успешно создан" })
+        const token = jwt.sign({ id: user.id, role: user.role }, process.env.SECRET_CODE)
+        return res.json({ message: "Пользователь был успешно создан", token, user })
 
     }
     catch (e) {
-        console.log(e);
-        res.send({ message: "Ошибка сервера" });
+        console.log(error);
+        return res.status(500).json(e);
     }
 })
 
@@ -69,8 +70,8 @@ router.post('/login', async (req, res) => {
         )
     }
     catch (e) {
-        console.log(e);
-        res.send({ message: "Ошибка сервера" });
+        console.log(error);
+        return res.status(500).json(e);
     }
 })
 
@@ -95,8 +96,8 @@ router.get('/auth', authMiddleware, async (req, res) => {
         )
     }
     catch (e) {
-        console.log(e);
-        res.send({ message: "Ошибка сервера" });
+        console.log(error);
+        return res.status(500).json(e);
     }
 })
 
@@ -111,8 +112,8 @@ router.put('/:login/role', authMiddleware, async (req, res) => {
         return res.json({ message: "Права успешно изменены" })
 
     } catch (error) {
-        console.log(e);
-        res.send({ message: "Ошибка сервера" });
+        console.log(error);
+        return res.status(500).json(e);
     }
 })
 

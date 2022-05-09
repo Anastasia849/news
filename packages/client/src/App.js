@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import NavBar from "./components/NavBar/NavBar";
 import News from "./components/News/News";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { router } from "./config/config";
 import LoadingBar from "react-top-loading-bar";
 import Login from "./routes/Login/Login.jsx";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
 import {  auth } from "./bll/reducers/reducerUser";
 
 
@@ -26,7 +26,6 @@ function App() {
   document.body.style.backgroundColor = "#F5F5F5";
   return (
     <>
-      <Router>
         <NavBar />
         <LoadingBar color="#005abb" height={3} progress={progress} />
         <Routes>
@@ -52,7 +51,6 @@ function App() {
             <Route path="/login" element={<Login />}/>
           }
         </Routes>
-      </Router>
     </>
   );
 }

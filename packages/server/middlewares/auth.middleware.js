@@ -6,7 +6,6 @@ const jsonwebtoken = require("jsonwebtoken");
  * @returns 
  */
 const authMiddleware = (req, res, next) => {
-    const secretKey = process.env.SECRET_KEY;
 
     if (req.method === 'OPTIONS') {
         return next();
@@ -23,7 +22,7 @@ const authMiddleware = (req, res, next) => {
             });
         }
 
-        const debounced = jsonwebtoken.verify(token, secretKey);
+        const debounced = jsonwebtoken.verify(token, process.env.SECRET_CODE);
 
         req.user = debounced;
 

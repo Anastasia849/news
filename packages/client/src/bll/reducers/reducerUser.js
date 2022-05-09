@@ -4,12 +4,15 @@ import axios from "axios";
 const initialState = {
     users: [],
     user: {},
-    loginError: ""
+    loginError: "",
+    userLogs: null
 };
 
 const LOGIN = "LOGIN";
 const LOGIN_ERROR = "LOGIN_ERROR";
 const LOGOUT = "LOGOUT";
+const SET_LOGS = "SET_LOGS";
+const ADD_NEW_LOG = "ADD_NEW_LOG"
 
 const reducerUser = (state = initialState, action) => {
     switch (action.type) {
@@ -23,7 +26,8 @@ const reducerUser = (state = initialState, action) => {
                 ...state,
                 user: {
                     login: action.login,
-                    role: action.role
+                    role: action.role,
+                    id: action.id
                 }
             }
         case LOGOUT:
@@ -31,6 +35,16 @@ const reducerUser = (state = initialState, action) => {
                 ...state,
                 user: {}
             }
+        case SET_LOGS:
+            return {
+                ...state,
+                userLogs: action.logs
+            }
+        case ADD_NEW_LOG: 
+        return {
+            ...state, 
+            userLogs: [...state.userLogs, action.log]
+        }
         default: {
             return state;
         }
@@ -46,16 +60,29 @@ export const userActionCreator = {
             loginError
         }
     },
-    login(login, role) {
+    login(login, role, id) {
         return {
             type: LOGIN,
             login,
-            role
+            role, 
+            id
         }
     },
     logout() {
         return {
             type: LOGOUT
+        }
+    },
+    setLogs(logs) {
+        return{
+            type: SET_LOGS,
+            logs
+        }
+    },
+    addLog(log){
+        return {
+            type: ADD_NEW_LOG,
+            log
         }
     }
 }
@@ -78,6 +105,21 @@ export const login = (login, password) => {
             .post("/api/users/login", {login, password})
             .then(({data}) => {
                 localStorage.setItem("authorization", data.token)
+                dispatch(userActionCreator.login(data.user.login, data.user.role, data.user.id))
+                dispatch(getUserLogs(data.user.id))
+            })
+            .catch(error => {
+                dispatch(userActionCreator.changeLoginError(error.response.data.message));
+            })
+    }
+}
+
+export const registration = (login, password) => {
+    return async (dispatch) => {
+        await axios
+            .post("/api/users/registration", { login, password })
+            .then(({ data }) => {
+                localStorage.setItem("authorization", data.token)
                 dispatch(userActionCreator.login(data.user.login, data.user.role))
             })
             .catch(error => {
@@ -89,10 +131,11 @@ export const login = (login, password) => {
 export const auth = () => {
     return async (dispatch) => {
         await axios
-            .get("/api/users/auth", { headers:{Authorization: "Bearer ${localStorage.getItem('authorization')}"}})
+            .get("/api/users/auth", { headers:{Authorization: `Bearer ${localStorage.getItem('authorization')}`}})
             .then(({ data }) => {
                 localStorage.setItem("authorization", data.token)
-                dispatch(userActionCreator.login(data.user.login, data.user.role))
+                dispatch(userActionCreator.login(data.user.login, data.user.role, data.user.id))
+                dispatch(getUserLogs(data.user.id))
             })
             .catch(error => {
                 console.log(error);
@@ -105,5 +148,31 @@ export const logout = () => {
     return (dispatch) => {
         dispatch(userActionCreator.logout());
         localStorage.removeItem("authorization");
+    }
+}
+
+export const getUserLogs = (id) => {
+    return async (dispatch) => {
+        await axios
+            .get(`/api/logs/${id}/log`, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
+            .then(({ data }) => {
+                dispatch(userActionCreator.setLogs(data.logs))
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+}
+
+export const writeNewLog = (id, log) => {
+    return async (dispatch) => {
+        await axios
+            .post(`/api/logs/${id}/write`, { ...log }, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
+            .then(({ data }) => {
+                dispatch(userActionCreator.addLog(data.log))
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 }
