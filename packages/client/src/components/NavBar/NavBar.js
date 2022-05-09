@@ -9,7 +9,9 @@ import { LinkContainer } from "react-router-bootstrap"
 function NavBar() {
   return (
     <Navbar style={navBar} variant="dark" expand="lg" fixed="top">
-      <Navbar.Brand style={navBrand} href="/">{navbarBrand}</Navbar.Brand>
+      <LinkContainer style={navBrand} className={"navbar-brand"} to={'/'}>
+        <Nav.Link>{navbarBrand}</Nav.Link>
+      </LinkContainer>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav style={nav} className="mr-auto">
