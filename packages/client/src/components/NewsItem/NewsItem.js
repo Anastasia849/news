@@ -30,7 +30,7 @@ function NewsItem(props) {
             {description}
           </Card.Text>
           <Details author={author} channel={channel} date={date} />
-          <Button onClick={() => writeLog()} href={urlNews} target="_blank" style={btn}>Read more →</Button>
+          <Button onClick={() => writeLog()} href={urlNews} target="_blank" style={btn}>Читать далее →</Button>
         </Card.Body>
       </Card>
     </>

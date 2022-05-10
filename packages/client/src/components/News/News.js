@@ -7,7 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Nullimage from "../../components/Images/nullimage.png";
 import { Row, Col } from "react-bootstrap";
 import { Header, Container, card } from "./index";
-import { endpointPath } from "../../config/api";
+import { endpointPath, endpointPath2 } from "../../config/api";
 import { header } from "../../config/config";
 
 
@@ -26,7 +26,8 @@ function News(props) {
   const updatenews = async () => {
     try {
       props.setProgress(15);
-      const response = await axios.get(endpointPath(props.country, props.category, page, props.pageSize));
+
+      const response = !props.domains ? (await axios.get(endpointPath(props.country, props.category, page, props.pageSize))) :(await axios.get(endpointPath2(props.domains, page, props.pageSize)));
       setLoading(true);
       props.setProgress(70);
       const parsedData = response.data;
@@ -46,7 +47,7 @@ function News(props) {
   }, []);
 
   const fetchMoreData = async () => {
-    const response = await axios.get(endpointPath(props.country, props.category, page + 1, props.pageSize));
+    const response = !props.domains ? (await axios.get(endpointPath(props.country, props.category, page + 1, props.pageSize))) :(await axios.get(endpointPath2(props.domains, page + 1, props.pageSize)));
     setPage(page + 1);
     const parsedData = response.data;
     setArticles(articles.concat(parsedData.articles));
@@ -58,9 +59,6 @@ function News(props) {
       <Header>
         {header}
       </Header>
-      {/* <Header>
-        {header(props.nav)}
-      </Header> */}
       {loading && <Spinner />}
       <InfiniteScroll
         dataLength={articles.length}

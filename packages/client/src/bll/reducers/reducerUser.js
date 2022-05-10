@@ -5,7 +5,7 @@ const initialState = {
     users: [],
     user: {},
     loginError: "",
-    userLogs: null
+    userLogs: []
 };
 
 const LOGIN = "LOGIN";

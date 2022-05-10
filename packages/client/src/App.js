@@ -9,6 +9,7 @@ import Login from "./routes/Login/Login.jsx";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux"
 import {  auth } from "./bll/reducers/reducerUser";
+import Recommendation from "./routes/Recommendation/Recommendation";
 
 
 function App() {
@@ -30,6 +31,18 @@ function App() {
         <LoadingBar color="#005abb" height={3} progress={progress} />
         <Routes>
           {
+            <Route exact path="/" 
+            key={uuidv4()} 
+            element = {
+              <Recommendation
+              setProgress={setProgress}
+              pageSize={pageSize}
+              path="/"
+              />
+            }
+            />
+          }
+          {
             router.map(path =>
               <Route
                 exact
@@ -42,6 +55,7 @@ function App() {
                     category={path.category}
                     pageSize={pageSize}
                     country={path.country}
+                    path={path.path}
                   />
                 }
               />
