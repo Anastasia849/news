@@ -7,20 +7,31 @@ import { router } from "./config/config";
 import LoadingBar from "react-top-loading-bar";
 import Login from "./routes/Login/Login.jsx";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux"
-import {  auth } from "./bll/reducers/reducerUser";
-import Recommendation from "./routes/Recommendation/Recommendation";
+import { useDispatch,useSelector } from "react-redux"
+import {  auth, getUserLogs } from "./bll/reducers/reducerUser";
+// import Recommendation from "./routes/Recommendation/Recommendation";
 
 
 function App() {
   
   const dispath = useDispatch()
- 
+  const [domains, setDomains] = useState("");
+  const user = useSelector((state) => state.reducerUser.user)
+
+
   useEffect(() => {
     if (localStorage.getItem("authorization")) {
       dispath(auth())
     }
   }, [])
+
+  useEffect(()=>{
+    dispath(getUserLogs(user.id)).then(()=>{
+      if(localStorage.getItem("domains")){
+        setDomains(localStorage.getItem("domains"))
+      }
+    })
+  })
 
   const [progress, setProgress] = useState(0);
   const pageSize = 7;
@@ -34,7 +45,8 @@ function App() {
             <Route exact path="/" 
             key={uuidv4()} 
             element = {
-              <Recommendation
+              <News
+              domains={domains ? domains: ""}
               setProgress={setProgress}
               pageSize={pageSize}
               path="/"

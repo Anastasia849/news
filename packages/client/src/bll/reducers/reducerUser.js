@@ -96,6 +96,9 @@ export const userGetters = {
     },
     getAuthorization(state) {
         return state.reducerUser.authorization;
+    },
+    getLogs(state){
+        return state.reducerUser.userLogs;
     }
 }
 
@@ -148,6 +151,7 @@ export const logout = () => {
     return (dispatch) => {
         dispatch(userActionCreator.logout());
         localStorage.removeItem("authorization");
+        localStorage.removeItem("domains");
     }
 }
 
@@ -156,10 +160,21 @@ export const getUserLogs = (id) => {
         await axios
             .get(`/api/logs/${id}/log`, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
             .then(({ data }) => {
-                dispatch(userActionCreator.setLogs(data.logs))
+                dispatch(userActionCreator.setLogs(data))
+                let count =new Map();
+                data.map(function(element){
+                    if(!count.has(element)){
+                                count.set(element.source, 1);
+                            }
+                            else count.set(element.source, count.get(element.source) + 1);
+                })
+                let sorted =[...count.entries()].sort(function(a,b) {return b[1] - a[1]});
+                let domains = sorted.map(element =>element[0].toLowerCase()).slice(0,5).join(",")
+                localStorage.setItem("domains", domains)
             })
             .catch(error => {
                 console.log(error);
+                localStorage.removeItem("domains")
             })
     }
 }

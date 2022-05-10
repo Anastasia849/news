@@ -37,9 +37,9 @@ router.post('/:id/write', authMiddleware, async (req, res) => {
 router.get("/:id/log", authMiddleware, async (req, res) => {
     try {
         const id = req.params.id
-
+        
         const user = await User.findById(id);
-
+        
         if (!user) {
             return res.status(400).json({ message: `Пользователя с таким id не существует` })
         }
@@ -49,7 +49,7 @@ router.get("/:id/log", authMiddleware, async (req, res) => {
         return res.json(log)
     } catch (error) {
         console.log(error);
-        return res.status(500).json(e);        
+        return res.status(500).json(error);        
     }
 }) 
 

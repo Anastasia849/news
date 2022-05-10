@@ -26,7 +26,6 @@ function News(props) {
   const updatenews = async () => {
     try {
       props.setProgress(15);
-
       const response = !props.domains ? (await axios.get(endpointPath(props.country, props.category, page, props.pageSize))) :(await axios.get(endpointPath2(props.domains, page, props.pageSize)));
       setLoading(true);
       props.setProgress(70);
